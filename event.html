@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Events Portal | Registration System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a0716;
+            --primary-dark: #230a22;
+            --secondary: #36092b;
+            --success: #52530b;
+            --light: #186180;
+            --dark: #0d355c;
+            --gray: #120a2f;
+            --light-gray: #0c133c;
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --accent: #4361ee;
+            --accent-light: #4895ef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #e1e3e9;
+            overflow-x: hidden;
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .slide-down {
+            animation: slideDown 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        .slide-left {
+            animation: slideLeft 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        .slide-right {
+            animation: slideRight 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .scale-in {
+            animation: scaleIn 0.8s ease forwards;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .rotate {
+            animation: rotate 20s linear infinite;
+        }
+
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        /* Keyframes */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(67, 97, 238, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px rgba(67, 97, 238, 0.5), 0 0 20px rgba(67, 97, 238, 0.3);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(67, 97, 238, 0.8), 0 0 30px rgba(67, 97, 238, 0.5);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgb(217, 225, 231);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease forwards;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            animation: slideRight 0.8s ease forwards 0.3s;
+        }
+
+        .logo i {
+            color: var(--secondary);
+            animation: rotate 20s linear infinite;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a.active {
+            color: var(--primary);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+            animation: slideRight 0.3s ease forwards;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            animation: slideLeft 0.8s ease forwards 0.3s;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+            animation: fadeIn 0.8s ease forwards 0.5s;
+            opacity: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: rotate 300s linear infinite;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            animation: slideDown 0.8s ease forwards 0.3s;
+            opacity: 0;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            animation: slideUp 0.8s ease forwards 0.5s;
+            opacity: 0;
+        }
+
+        #exploreEventsBtn {
+            animation: slideUp 0.8s ease forwards 0.7s, pulse 2s infinite 2s;
+            opacity: 0;
+        }
+
+        /* Floating shapes in hero */
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 15s infinite linear;
+        }
+
+        .shape-1 {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+            animation-duration: 20s;
+        }
+
+        .shape-3 {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+            animation-duration: 12s;
+        }
+
+        /* Events Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease forwards 0.3s;
+            opacity: 0;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 20px auto 0;
+            font-size: 1.1rem;
+        }
+
+        .events-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease forwards 0.5s;
+            opacity: 0;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            background-color: white;
+            border: 1px solid var(--light-gray);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background-color: rgba(67, 97, 238, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .filter-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .filter-btn:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .event-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            animation: scaleIn 0.6s ease forwards;
+            animation-delay: calc(var(--i) * 0.1s);
+            position: relative;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .event-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .event-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-img {
+            height: 200px;
+            width: 100%;
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-img::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+            top: 0;
+            left: 0;
+        }
+
+        .event-img i {
+            animation: bounce 3s infinite;
+            z-index: 1;
+        }
+
+        .event-content {
+            padding: 25px;
+        }
+
+        .event-category {
+            display: inline-block;
+            padding: 6px 15px;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            transition: var(--transition);
+        }
+
+        .event-card:hover .event-category {
+            transform: scale(1.05);
+            background-color: rgba(67, 97, 238, 0.2);
+        }
+
+        .event-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+
+        .event-card:hover .event-title {
+            color: var(--accent);
+        }
+
+        .event-date, .event-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            color: var(--gray);
+        }
+
+        .event-date i, .event-location i {
+            color: var(--primary);
+        }
+
+        .event-description {
+            margin-bottom: 20px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .event-registered {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Registration Form */
+        .registration-form-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            animation: scaleIn 0.8s ease forwards;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .registration-form-container::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            top: 0;
+            left: 0;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            animation: slideUp 0.5s ease forwards;
+            opacity: 0;
+            animation-delay: calc(var(--i) * 0.1s);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #f8f9fa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            background-color: white;
+            transform: translateY(-2px);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Dashboard */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+            animation: fadeIn 0.8s ease forwards 0.3s;
+            opacity: 0;
+        }
+
+        .dashboard-sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            height: fit-content;
+            animation: slideRight 0.6s ease forwards 0.4s;
+            opacity: 0;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-menu li::before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            height: 0;
+            left: 0;
+            top: 0;
+            background-color: var(--accent);
+            transition: height 0.3s ease;
+        }
+
+        .sidebar-menu li:hover::before {
+            height: 100%;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--dark);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .dashboard-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            animation: slideLeft 0.6s ease forwards 0.4s;
+            opacity: 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+
+        .events-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .events-table th, .events-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+
+        .events-table th {
+            background-color: rgba(67, 97, 238, 0.05);
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .events-table tr {
+            transition: var(--transition);
+        }
+
+        .events-table tr:hover {
+            background-color: rgba(67, 97, 238, 0.03);
+            transform: translateX(5px);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .status-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .status-confirmed {
+            background-color: rgba(76, 201, 240, 0.2);
+            color: #0a8ea8;
+        }
+
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #b38700;
+            animation: pulse 2s infinite;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .footer-col:hover h3::after {
+            width: 60px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li:hover {
+            transform: translateX(5px);
+        }
+
+        .footer-col a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Page-specific styles */
+        .page {
+            display: none;
+            padding: 40px 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: scaleIn 0.4s ease forwards;
+            transform: scale(0.9);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                order: 3;
+                margin-top: 20px;
+                display: none;
+                animation: slideDown 0.3s ease forwards;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            .registration-form-container {
+                padding: 25px;
+            }
+        }
+
+        /* Utility classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-4 {
+            margin-bottom: 40px;
+        }
+
+        .mt-4 {
+            margin-top: 40px;
+        }
+
+        /* Particles effect */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>CollegeEvents</span>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#events" class="nav-link" data-page="events">Events</a></li>
+                    <li><a href="#register" class="nav-link" data-page="register">Register</a></li>
+                    <li><a href="#dashboard" class="nav-link" data-page="dashboard">Dashboard</a></li>
+                    <li><a href="#about" class="nav-link" data-page="about">About</a></li>
+                    <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="auth-buttons">
+                <button class="btn btn-outline" id="loginBtn">Login</button>
+                <button class="btn btn-primary" id="signupBtn">Sign Up</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div class="floating-shapes">
+                <div class="floating-shape shape-1"></div>
+                <div class="floating-shape shape-2"></div>
+                <div class="floating-shape shape-3"></div>
+            </div>
+            <div class="container hero-content">
+                <h1>College Events Registration System</h1>
+                <p>Discover and register for exciting college events, workshops, and activities all in one place. Connect, learn, and grow with our campus community.</p>
+                <button class="btn btn-secondary" id="exploreEventsBtn">Explore Events <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="section-title">
+                <h2>Upcoming Events</h2>
+                <p>Join these exciting upcoming events organized by various departments and student clubs</p>
+            </div>
+            
+            <div class="events-grid" id="featuredEvents">
+                <!-- Featured events will be loaded by JavaScript -->
+            </div>
+            
+            <div class="text-center">
+                <button class="btn btn-primary" id="viewAllEventsBtn">View All Events <i class="fas fa-arrow-circle-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Page -->
+    <section id="events" class="page">
+        <div class="container">
+            <div class="section-title mt-4">
+                <h2>All Events</h2>
+                <p>Browse through all upcoming and past events. Filter by category to find what interests you.</p>
+            </div>
+            
+            <div class="events-filter">
+                <button class="filter-btn active" data-filter="all">All Events</button>
+                <button class="filter-btn" data-filter="workshop">Workshops</button>
+                <button class="filter-btn" data-filter="seminar">Seminars</button>
+                <button class="filter-btn" data-filter="cultural">Cultural</button>
+                <button class="filter-btn" data-filter="sports">Sports</button>
+                <button class="filter-btn" data-filter="tech">Tech</button>
+            </div>
+            
+            <div class="events-grid" id="allEvents">
+                <!-- All events will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Page -->
+    <section id="register" class="page">
+        <div class="container">
+            <div class="section-title mt-4">
+                <h2>Event Registration</h2>
+                <p>Fill out the form below to register for an event. Make sure to provide accurate information.</p>
+            </div>
+            
+            <div class="registration-form-container">
+                <h3 class="form-title">Register for <span id="eventName" class="glow-text">Annual Tech Fest</span></h3>
+                
+                <form id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group" style="--i: 0">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-control" required>
+                        </div>
+                        <div class="form-group" style="--i: 1">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="--i: 2">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group" style="--i: 3">
+                        <label for="department">Department</label>
+                        <select id="department" class="form-control" required>
+                            <option value="">Select Department</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="BAMS">BAMS</option>
+                            <option value="BHMS">BHMS</option>
+                            <option value="Nursing">Nursing</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="--i: 4">
+                        <label for="year">Year of Study</label>
+                        <select id="year" class="form-control" required>
+                            <option value="">Select Year</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="--i: 5">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group" style="--i: 6">
+                        <label for="comments">Additional Comments (Optional)</label>
+                        <textarea id="comments" class="form-control" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group" style="--i: 7">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the terms and conditions</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block" style="width: 100%; padding: 15px; --i: 8">Register for Event <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Page -->
+    <section id="dashboard" class="page">
+        <div class="container">
+            <div class="section-title mt-4">
+                <h2>My Dashboard</h2>
+                <p>Manage your event registrations and view your participation history</p>
+            </div>
+            
+            <div class="dashboard-container">
+                <div class="dashboard-sidebar">
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="active"><i class="fas fa-calendar-alt"></i> My Registrations</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> History</a></li>
+                        <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+                    </ul>
+                </div>
+                
+                <div class="dashboard-content">
+                    <div class="dashboard-header">
+                        <h3 class="dashboard-title">My Event Registrations</h3>
+                        <button class="btn btn-outline">Export Data <i class="fas fa-download"></i></button>
+                    </div>
+                    
+                    <table class="events-table">
+                        <thead>
+                            <tr>
+                                <th>Event Name</th>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="registrationsTable">
+                            <!-- Registrations will be loaded by JavaScript -->
+                        </tbody>
+                    </table>
+                    
+                    <div class="mt-4">
+                        <h4>Quick Stats</h4>
+                        <div style="display: flex; gap: 20px; margin-top: 15px;">
+                            <div style="background-color: rgba(67, 97, 238, 0.1); padding: 15px; border-radius: var(--border-radius); flex: 1; animation: slideUp 0.5s ease forwards 0.2s; opacity: 0;">
+                                <h5 style="color: var(--primary);">Total Registrations</h5>
+                                <p style="font-size: 1.8rem; font-weight: 700;">7</p>
+                            </div>
+                            <div style="background-color: rgba(76, 201, 240, 0.1); padding: 15px; border-radius: var(--border-radius); flex: 1; animation: slideUp 0.5s ease forwards 0.4s; opacity: 0;">
+                                <h5 style="color: #0a8ea8;">Upcoming Events</h5>
+                                <p style="font-size: 1.8rem; font-weight: 700;">4</p>
+                            </div>
+                            <div style="background-color: rgba(114, 9, 183, 0.1); padding: 15px; border-radius: var(--border-radius); flex: 1; animation: slideUp 0.5s ease forwards 0.6s; opacity: 0;">
+                                <h5 style="color: var(--secondary);">Past Events</h5>
+                                <p style="font-size: 1.8rem; font-weight: 700;">3</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="page">
+        <div class="container">
+            <div class="section-title mt-4">
+                <h2>About CollegeEvents</h2>
+                <p>Learn about our mission to connect students with campus events and activities</p>
+            </div>
+            
+            <div style="background-color: white; border-radius: var(--border-radius); padding: 40px; box-shadow: var(--shadow); margin-bottom: 40px; animation: scaleIn 0.8s ease forwards; opacity: 0;">
+                <h3 style="margin-bottom: 20px; color: var(--dark);">Our Mission</h3>
+                <p style="margin-bottom: 20px; color: var(--gray);">CollegeEvents is a centralized platform designed to streamline event discovery and registration for students across campus. We aim to foster community engagement, enhance student participation, and simplify event management for organizers.</p>
+                
+                <h3 style="margin-bottom: 20px; color: var(--dark);">How It Works</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 30px;">
+                    <div style="text-align: center; padding: 20px; animation: slideUp 0.5s ease forwards 0.2s; opacity: 0;">
+                        <div style="background-color: rgba(67, 97, 238, 0.1); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; animation: float 6s ease-in-out infinite;">
+                            <i class="fas fa-search" style="font-size: 1.8rem; color: var(--primary);"></i>
+                        </div>
+                        <h4 style="margin-bottom: 10px;">Discover Events</h4>
+                        <p style="color: var(--gray);">Browse through various categories of events happening on campus</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 20px; animation: slideUp 0.5s ease forwards 0.4s; opacity: 0;">
+                        <div style="background-color: rgba(76, 201, 240, 0.1); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; animation: float 6s ease-in-out infinite 1s;">
+                            <i class="fas fa-edit" style="font-size: 1.8rem; color: #0a8ea8;"></i>
+                        </div>
+                        <h4 style="margin-bottom: 10px;">Register Easily</h4>
+                        <p style="color: var(--gray);">Fill out a simple form to register for any event in just a few clicks</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 20px; animation: slideUp 0.5s ease forwards 0.6s; opacity: 0;">
+                        <div style="background-color: rgba(114, 9, 183, 0.1); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; animation: float 6s ease-in-out infinite 2s;">
+                            <i class="fas fa-calendar-check" style="font-size: 1.8rem; color: var(--secondary);"></i>
+                        </div>
+                        <h4 style="margin-bottom: 10px;">Manage Participation</h4>
+                        <p style="color: var(--gray);">Track all your registrations and event history from your personal dashboard</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact" class="page">
+        <div class="container">
+            <div class="section-title mt-4">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our team for any questions or support</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-bottom: 60px;">
+                <div style="background-color: white; border-radius: var(--border-radius); padding: 30px; box-shadow: var(--shadow); animation: slideRight 0.6s ease forwards; opacity: 0;">
+                    <h3 style="margin-bottom: 20px; color: var(--dark);">Get In Touch</h3>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px; color: var(--primary);"><i class="fas fa-map-marker-alt"></i> Address</h4>
+                        <p style="color: var(--gray);">Student Affairs Office, Engineering Building</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px; color: var(--primary);"><i class="fas fa-phone"></i> Phone</h4>
+                        <p style="color: var(--gray);">+1 (555) 123-4567</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px; color: var(--primary);"><i class="fas fa-envelope"></i> Email</h4>
+                        <p style="color: var(--gray);">shettyinstituteoftechnology@gmail.com</p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="margin-bottom: 10px; color: var(--primary);"><i class="fas fa-clock"></i> Office Hours</h4>
+                        <p style="color: var(--gray);">Monday - Friday: 9:00 AM - 5:00 PM</p>
+                    </div>
+                </div>
+                
+                <div style="background-color: white; border-radius: var(--border-radius); padding: 30px; box-shadow: var(--shadow); animation: slideLeft 0.6s ease forwards; opacity: 0;">
+                    <h3 style="margin-bottom: 20px; color: var(--dark);">Send a Message</h3>
+                    
+                    <form id="contactForm">
+                        <div class="form-group" style="--i: 0">
+                            <label for="contactName">Your Name</label>
+                            <input type="text" id="contactName" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group" style="--i: 1">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group" style="--i: 2">
+                            <label for="contactSubject">Subject</label>
+                            <input type="text" id="contactSubject" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group" style="--i: 3">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" class="form-control" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="--i: 4">Send Message <i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>CollegeEvents</h3>
+                    <p style="color: #adb5bd; margin-bottom: 20px;">Your gateway to campus activities and student engagement.</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" style="color: white; font-size: 1.2rem; animation: bounce 2s infinite;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; font-size: 1.2rem; animation: bounce 2s infinite 0.2s;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: white; font-size: 1.2rem; animation: bounce 2s infinite 0.4s;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; font-size: 1.2rem; animation: bounce 2s infinite 0.6s;"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#register">Registration</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Departments</h3>
+                    <ul>
+                        <li><a href="#">Student Affairs</a></li>
+                        <li><a href="#">Academic Events</a></li>
+                        <li><a href="#">Cultural Committee</a></li>
+                        <li><a href="#">Sports Department</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 CollegeEvents Portal. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeLoginModal">&times;</button>
+            <h3 style="margin-bottom: 20px;">Login to Your Account</h3>
+            
+            <form id="loginForm">
+                <div class="form-group" style="--i: 0">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" required>
+                </div>
+                
+                <div class="form-group" style="--i: 1">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" required>
+                </div>
+                
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center; --i: 2">
+                    <div>
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" style="color: var(--primary); text-decoration: none;">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 15px; --i: 3">Login <i class="fas fa-sign-in-alt"></i></button>
+                
+                <p style="text-align: center; color: var(--gray);">Don't have an account? <a href="#" id="signupLink" style="color: var(--primary); text-decoration: none;">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeSignupModal">&times;</button>
+            <h3 style="margin-bottom: 20px;">Create Your Account</h3>
+            
+            <form id="signupForm">
+                <div class="form-row">
+                    <div class="form-group" style="--i: 0">
+                        <label for="signupFirstName">First Name</label>
+                        <input type="text" id="signupFirstName" class="form-control" required>
+                    </div>
+                    <div class="form-group" style="--i: 1">
+                        <label for="signupLastName">Last Name</label>
+                        <input type="text" id="signupLastName" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="--i: 2">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" class="form-control" required>
+                </div>
+                
+                <div class="form-group" style="--i: 3">
+                    <label for="signupStudentId">Student ID</label>
+                    <input type="text" id="signupStudentId" class="form-control" required>
+                </div>
+                
+                <div class="form-group" style="--i: 4">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" class="form-control" required>
+                </div>
+                
+                <div class="form-group" style="--i: 5">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; --i: 6">Create Account <i class="fas fa-user-plus"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registration Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeSuccessModal">&times;</button>
+            <div style="text-align: center; padding: 20px;">
+                <div style="background-color: rgba(76, 201, 240, 0.2); width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; animation: pulse 2s infinite;">
+                    <i class="fas fa-check" style="font-size: 3rem; color: #0a8ea8;"></i>
+                </div>
+                <h3 style="margin-bottom: 10px; color: var(--dark);">Registration Successful!</h3>
+                <p style="color: var(--gray); margin-bottom: 20px;">Your registration for <span id="successEventName" style="color: var(--primary); font-weight: 600;">Annual Tech Fest</span> has been confirmed. You will receive a confirmation email shortly.</p>
+                <button class="btn btn-primary" id="successOkBtn">OK <i class="fas fa-thumbs-up"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample event data
+        const events = [
+            {
+                id: 1,
+                title: "Annual Tech Fest",
+                category: "tech",
+                date: "Oct 15, 2025",
+                time: "10:00 AM - 4:00 PM",
+                location: "Main Auditorium",
+                description: "A day-long event showcasing the latest in technology with workshops, competitions, and keynote speakers.",
+                registered: 145,
+                icon: "fas fa-laptop-code"
+            },
+            {
+                id: 2,
+                title: "Cultural Night",
+                category: "cultural",
+                date: "Oct 20, 2025",
+                time: "6:00 PM - 10:00 PM",
+                location: "SIT Ground",
+                description: "An evening of music, dance, and performances from various cultures represented on campus.",
+                registered: 89,
+                icon: "fas fa-music"
+            },
+            {
+                id: 3,
+                title: "Prompt Engineering",
+                category: "workshop",
+                date: "Oct 25, 2025",
+                time: "2:00 PM - 5:00 PM",
+                location: "Seminar Hall",
+                description: "Learn how to turn your ideas into successful startups from industry experts.",
+                registered: 67,
+                icon: "fas fa-lightbulb"
+            },
+            {
+                id: 4,
+                title: "Inter-College Sports Meet",
+                category: "sports",
+                date: "Nov 5, 2025",
+                time: "9:00 AM - 6:00 PM",
+                location: "College Playground",
+                description: "Annual sports competition featuring various colleges in track, field, and team sports.",
+                registered: 210,
+                icon: "fas fa-running"
+            },
+            {
+                id: 5,
+                title: "AI & Machine Learning Seminar",
+                category: "seminar",
+                date: "Nov 12, 2025",
+                time: "11:00 AM - 1:00 PM",
+                location: "Computer Science Seminar Hall",
+                description: "An in-depth seminar on the latest advancements in AI and machine learning technologies.",
+                registered: 112,
+                icon: "fas fa-robot"
+            },
+            {
+                id: 6,
+                title: "Cybersecurity and Ethical Hacking Workshop",
+                category: "workshop",
+                date: "Nov 18, 2025",
+                time: "3:00 PM - 5:00 PM",
+                location: "Seminar Hall",
+                description: "Learn about sustainable practices and environmental conservation techniques.",
+                registered: 78,
+                icon: "fas fa-leaf"
+            }
+        ];
+
+        // Sample registrations data
+        const registrations = [
+            { id: 1, event: "Annual Tech Fest", date: "Oct 15, 2025", category: "Tech", status: "confirmed" },
+            { id: 2, event: "Cultural Night", date: "Oct 20, 2025", category: "Cultural", status: "confirmed" },
+            { id: 3, event: "Prompt Engineering", date: "Oct 25, 2025", category: "Workshop", status: "pending" },
+            { id: 4, event: "Inter-College Sports Meet", date: "Nov 5, 2025", category: "Sports", status: "confirmed" },
+            { id: 5, event: "AI & Machine Learning Seminar", date: "Nov 12, 2025", category: "Seminar", status: "confirmed" }
+        ];
+
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const featuredEventsContainer = document.getElementById('featuredEvents');
+        const allEventsContainer = document.getElementById('allEvents');
+        const registrationsTable = document.getElementById('registrationsTable');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const successModal = document.getElementById('successModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeSignupModal = document.getElementById('closeSignupModal');
+        const closeSuccessModal = document.getElementById('closeSuccessModal');
+        const successOkBtn = document.getElementById('successOkBtn');
+        const exploreEventsBtn = document.getElementById('exploreEventsBtn');
+        const viewAllEventsBtn = document.getElementById('viewAllEventsBtn');
+        const registrationForm = document.getElementById('registrationForm');
+        const eventNameElement = document.getElementById('eventName');
+        const successEventName = document.getElementById('successEventName');
+        const signupLink = document.getElementById('signupLink');
+
+        // Create floating particles
+        function createParticles() {
+            const hero = document.querySelector('.hero');
+            if (!hero) return;
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = Math.random() * 20 + 10 + 's';
+                particle.style.backgroundColor = `rgba(255, 255, 255, ${Math.random() * 0.4 + 0.1})`;
+                document.querySelector('.hero').appendChild(particle);
+            }
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating particles
+            createParticles();
+            
+            // Load featured events (first 3)
+            renderEvents(events.slice(0, 3), featuredEventsContainer);
+            
+            // Load all events
+            renderEvents(events, allEventsContainer);
+            
+            // Load registrations
+            renderRegistrations();
+            
+            // Trigger initial animations
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in, .slide-up, .slide-down, .slide-left, .slide-right, .scale-in').forEach(el => {
+                    el.style.animationPlayState = 'running';
+                });
+            }, 100);
+            
+            // Set up event listeners
+            setupEventListeners();
+        });
+
+        // Render events to a container
+        function renderEvents(eventsArray, container) {
+            container.innerHTML = '';
+            
+            eventsArray.forEach((event, index) => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+                eventCard.dataset.category = event.category;
+                eventCard.style.setProperty('--i', index);
+                
+                eventCard.innerHTML = `
+                    <div class="event-img">
+                        <i class="${event.icon}"></i>
+                    </div>
+                    <div class="event-content">
+                        <span class="event-category">${event.category.charAt(0).toUpperCase() + event.category.slice(1)}</span>
+                        <h3 class="event-title">${event.title}</h3>
+                        <div class="event-date">
+                            <i class="far fa-calendar"></i>
+                            <span>${event.date} | ${event.time}</span>
+                        </div>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${event.location}</span>
+                        </div>
+                        <p class="event-description">${event.description}</p>
+                        <div class="event-footer">
+                            <div class="event-registered">
+                                <i class="fas fa-users"></i>
+                                <span>${event.registered} Registered</span>
+                            </div>
+                            <button class="btn btn-primary register-btn" data-event-id="${event.id}" data-event-title="${event.title}">Register Now <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(eventCard);
+            });
+            
+            // Add event listeners to register buttons
+            document.querySelectorAll('.register-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const eventId = this.dataset.eventId;
+                    const eventTitle = this.dataset.eventTitle;
+                    
+                    // Add click animation
+                    this.classList.add('pulse');
+                    setTimeout(() => this.classList.remove('pulse'), 1000);
+                    
+                    // Switch to registration page
+                    switchPage('register');
+                    
+                    // Update event name in registration form
+                    eventNameElement.textContent = eventTitle;
+                    successEventName.textContent = eventTitle;
+                    
+                    // Add a glowing effect to the event name
+                    eventNameElement.classList.add('glow');
+                    setTimeout(() => eventNameElement.classList.remove('glow'), 2000);
+                });
+            });
+        }
+
+        // Render registrations to dashboard table
+        function renderRegistrations() {
+            registrationsTable.innerHTML = '';
+            
+            registrations.forEach((registration, index) => {
+                const row = document.createElement('tr');
+                row.style.animationDelay = `${index * 0.1}s`;
+                row.classList.add('slide-up');
+                
+                row.innerHTML = `
+                    <td>${registration.event}</td>
+                    <td>${registration.date}</td>
+                    <td>${registration.category}</td>
+                    <td><span class="status-badge status-${registration.status}">${registration.status.charAt(0).toUpperCase() + registration.status.slice(1)}</span></td>
+                    <td>
+                        <button class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem;">View Details <i class="fas fa-external-link-alt"></i></button>
+                    </td>
+                `;
+                
+                registrationsTable.appendChild(row);
+            });
+        }
+
+        // Set up all event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+                mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+                
+                // Add animation to menu items
+                if (mainNav.classList.contains('active')) {
+                    const menuItems = mainNav.querySelectorAll('li');
+                    menuItems.forEach((item, index) => {
+                        item.style.animationDelay = `${index * 0.1}s`;
+                        item.classList.add('slide-right');
+                    });
+                }
+            });
+
+            // Navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Add click animation
+                    this.classList.add('pulse');
+                    setTimeout(() => this.classList.remove('pulse'), 500);
+                    
+                    // Update active nav link
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Switch page
+                    const pageId = this.dataset.page;
+                    switchPage(pageId);
+                    
+                    // Close mobile menu if open
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+            });
+
+            // Filter buttons
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Add click animation
+                    this.classList.add('pulse');
+                    setTimeout(() => this.classList.remove('pulse'), 500);
+                    
+                    // Update active filter button
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter events
+                    const filter = this.dataset.filter;
+                    filterEvents(filter);
+                });
+            });
+
+            // Modal buttons
+            loginBtn.addEventListener('click', () => {
+                loginModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            signupBtn.addEventListener('click', () => {
+                signupModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeLoginModal.addEventListener('click', () => {
+                loginModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            closeSignupModal.addEventListener('click', () => {
+                signupModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            closeSuccessModal.addEventListener('click', () => {
+                successModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            successOkBtn.addEventListener('click', () => {
+                successModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                switchPage('dashboard');
+            });
+            
+            // Switch between login and signup modals
+            signupLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginModal.classList.remove('active');
+                signupModal.classList.add('active');
+            });
+
+            // Explore events button
+            exploreEventsBtn.addEventListener('click', function() {
+                this.classList.add('pulse');
+                setTimeout(() => this.classList.remove('pulse'), 1000);
+                switchPage('events');
+            });
+
+            // View all events button
+            viewAllEventsBtn.addEventListener('click', function() {
+                this.classList.add('pulse');
+                setTimeout(() => this.classList.remove('pulse'), 1000);
+                switchPage('events');
+            });
+
+            // Registration form submission
+            registrationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Add submit animation
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.classList.add('pulse');
+                
+                // In a real app, you would send the data to a server
+                // For now, just show success modal after a delay
+                setTimeout(() => {
+                    successModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    submitBtn.classList.remove('pulse');
+                }, 1000);
+                
+                // Reset form
+                this.reset();
+            });
+
+            // Contact form submission
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.classList.add('pulse');
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    alert('Thank you for your message! We will get back to you soon.');
+                    submitBtn.classList.remove('pulse');
+                    this.reset();
+                }, 1000);
+            });
+
+            // Login form submission
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.classList.add('pulse');
+                
+                // Simulate login
+                setTimeout(() => {
+                    alert('Login successful! Redirecting to dashboard...');
+                    submitBtn.classList.remove('pulse');
+                    loginModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    switchPage('dashboard');
+                }, 1000);
+            });
+
+            // Signup form submission
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.classList.add('pulse');
+                
+                // Simulate signup
+                setTimeout(() => {
+                    alert('Account created successfully! You can now log in.');
+                    submitBtn.classList.remove('pulse');
+                    signupModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    loginModal.classList.add('active');
+                }, 1000);
+            });
+
+            // Close modals when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === loginModal) {
+                    loginModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+                if (e.target === signupModal) {
+                    signupModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+                if (e.target === successModal) {
+                    successModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Switch between pages
+        function switchPage(pageId) {
+            // Hide all pages
+            pages.forEach(page => {
+                page.classList.remove('active');
+                // Reset animations for elements in the page
+                page.querySelectorAll('.fade-in, .slide-up, .slide-down, .slide-left, .slide-right, .scale-in').forEach(el => {
+                    el.style.animation = 'none';
+                    setTimeout(() => {
+                        el.style.animation = '';
+                    }, 10);
+                });
+            });
+            
+            // Show selected page
+            const activePage = document.getElementById(pageId);
+            activePage.classList.add('active');
+            
+            // Trigger animations for the new page
+            setTimeout(() => {
+                activePage.querySelectorAll('.fade-in, .slide-up, .slide-down, .slide-left, .slide-right, .scale-in').forEach(el => {
+                    el.style.animationPlayState = 'running';
+                });
+            }, 100);
+            
+            // Scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Filter events by category
+        function filterEvents(filter) {
+            const allEvents = document.querySelectorAll('#allEvents .event-card');
+            
+            allEvents.forEach((event, index) => {
+                event.style.animationDelay = `${index * 0.05}s`;
+                
+                if (filter === 'all' || event.dataset.category === filter) {
+                    event.style.display = 'block';
+                    event.classList.add('scale-in');
+                } else {
+                    event.classList.remove('scale-in');
+                    event.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
